@@ -5,40 +5,41 @@ from pathlib import Path
 import argparse
 import csv
 import unicodedata
+import io
 
-def _open_read(path):
-    """UTF-8 dene; olmazsa Windows Türkçe (cp1254) ile oku."""
+def _open_read_text(path: Path):
+    """Bytes -> text: önce UTF-8, olmazsa cp1254 (Windows Türkçe)."""
+    data = Path(path).read_bytes()
     try:
-        return open(path, "r", encoding="utf-8")
+        text = data.decode("utf-8")
     except UnicodeDecodeError:
-        return open(path, "r", encoding="cp1254")
+        text = data.decode("cp1254")
+    return io.StringIO(text)  # file-like object
 
 def tr_safe_lower(s: str) -> str:
-    """Türkçedeki noktalı İ sorununu düzeltip lower uygula."""
     if not s:
         return s
-    s = s.replace("\u0130", "I")   # İ -> I (sonra lower -> i)
-    s = s.replace("\u0307", "")    # combining dot above'ı temizle
+    s = s.replace("\u0130", "I")  # İ -> I
+    s = s.replace("\u0307", "")   # combining dot
     s = s.lower()
     return unicodedata.normalize("NFC", s)
 
 def normalize_text(addr: str) -> str:
     addr = tr_safe_lower(addr)
-    return " ".join(addr.split())  # fazla boşlukları tekille
+    return " ".join(addr.split())
 
 def normalize_address(input_path, output_path, config_path):
-    # TODO: Gerçek normalizasyon kuralları config'ten okunacak
     src = Path(input_path)
     dst = Path(output_path)
     dst.parent.mkdir(parents=True, exist_ok=True)
 
-    with _open_read(src) as f_in, dst.open("w", encoding="utf-8", newline="") as f_out:
+    with _open_read_text(src) as f_in, dst.open("w", encoding="utf-8", newline="") as f_out:
         r = csv.DictReader(f_in)
         fieldnames = r.fieldnames or []
         if "address" in fieldnames and "address_norm" not in fieldnames:
             fieldnames = fieldnames + ["address_norm"]
         elif "address" not in fieldnames:
-            fieldnames = ["address", "address_norm"]  # minimal fallback
+            fieldnames = ["address", "address_norm"]
 
         w = csv.DictWriter(f_out, fieldnames=fieldnames)
         w.writeheader()
