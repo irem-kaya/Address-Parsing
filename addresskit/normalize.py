@@ -8,6 +8,7 @@ import csv
 import unicodedata
 import io
 import yaml
+import re
 
 
 def _open_read_text(path: Path):
@@ -39,14 +40,46 @@ def load_cfg(cfg_path: str) -> dict:
 
 
 def normalize_text(addr: str, cfg: dict) -> str:
-    if addr is None:
+    """YAML konfige göre adım adım normalizasyon uygular."""
+    if not addr:
         addr = ""
+
+    # 0) Serbest replace (örn: "İST." -> "İSTANBUL")
     for k, v in (cfg.get("replace") or {}).items():
-        addr = addr.replace(k, v)
-    if cfg.get("lowercase", True):
+        if not isinstance(k, str):
+            continue
+        addr = addr.replace(k, v if isinstance(v, str) else "")
+
+    # 1) TR güvenli lowercase (fold_chars: tr) veya klasik lowercase
+    if cfg.get("fold_chars", "tr") == "tr" or cfg.get("lowercase", True):
         addr = tr_safe_lower(addr)
+    elif cfg.get("lowercase", False):
+        addr = addr.lower()
+
+    # 2) Noktalama temizliği
+    if cfg.get("strip_punctuation", False):
+        addr = re.sub(r"[^\w\s]", " ", addr, flags=re.UNICODE)
+
+    # 3) Kısaltmalar (abbreviations) — anahtarlar küçük harf varsayımı
+    abbr = cfg.get("abbreviations") or {}
+    if abbr:
+        for src, tgt in abbr.items():
+            if not isinstance(src, str):
+                continue
+            # kelime sınırında değiştir (Unicode)
+            pattern = rf"\b{re.escape(src.lower())}\b"
+            addr = re.sub(pattern, str(tgt), addr, flags=re.UNICODE)
+
+    # 4) Stopwords at
+    stops = set((cfg.get("stopwords") or []))
+    if stops:
+        tokens = [t for t in addr.split() if t not in stops]
+        addr = " ".join(tokens)
+
+    # 5) Fazla boşluk temizliği
     if cfg.get("strip_extra_spaces", True):
         addr = " ".join(addr.split())
+
     return addr
 
 
