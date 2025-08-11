@@ -1,11 +1,22 @@
-﻿[build-system]
+[build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "address-hackathon"
 version = "0.0.1"
-dependencies = ["pyyaml"]
+requires-python = ">=3.11"
+dependencies = [
+  "pyyaml",
+  "rapidfuzz",
+]
 
-[tool.setuptools]
-packages = { find = { include = ["addresskit*"] } }
+[tool.setuptools.packages.find]
+include = ["addresskit*"]
+
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 88

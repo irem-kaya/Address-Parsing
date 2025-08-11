@@ -2,6 +2,7 @@
 from pathlib import Path
 from addresskit.normalize import normalize_address
 
+
 def test_normalize_address(tmp_path: Path):
     src = tmp_path / "in.csv"
     out = tmp_path / "out.csv"

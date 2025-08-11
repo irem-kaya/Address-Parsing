@@ -1,9 +1,11 @@
 """
 Matching module for address data.
 """
+
 from pathlib import Path
 import argparse
 import csv
+
 
 def match_addresses(left_path, right_path, output_path, config_path):
     # TODO: Gerçek eşleştirme: token-base / fuzzy / embedding vs.
@@ -22,6 +24,7 @@ def match_addresses(left_path, right_path, output_path, config_path):
 
     print(f"[match] wrote -> {out}  (config={config_path})")
 
+
 def _parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--left", required=True)
@@ -29,6 +32,7 @@ def _parse_args():
     p.add_argument("--out", required=True)
     p.add_argument("--config", required=True)
     return p.parse_args()
+
 
 if __name__ == "__main__":
     args = _parse_args()

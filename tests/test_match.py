@@ -1,7 +1,7 @@
-
 from pathlib import Path
 from addresskit.match import match_addresses
 import csv
+
 
 def test_match(tmp_path: Path):
     left = tmp_path / "left.csv"
@@ -17,6 +17,13 @@ def test_match(tmp_path: Path):
 
     rows = list(csv.DictReader(out.open(encoding="utf-8")))
     assert len(rows) == 2
-    assert rows[0]["left_id"] == "0" and rows[0]["right_id"] == "0" and float(rows[0]["score"]) == 1.0
-    assert rows[1]["left_id"] == "1" and rows[1]["right_id"] == "1" and float(rows[1]["score"]) == 1.0
-
+    assert (
+        rows[0]["left_id"] == "0"
+        and rows[0]["right_id"] == "0"
+        and float(rows[0]["score"]) == 1.0
+    )
+    assert (
+        rows[1]["left_id"] == "1"
+        and rows[1]["right_id"] == "1"
+        and float(rows[1]["score"]) == 1.0
+    )
