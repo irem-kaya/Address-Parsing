@@ -7,3 +7,4 @@ git remote set-url origin https://github.com/irem-kaya/address-hackathon.git .ve
 *.ipynb_checkpoints/
 data/
 .venv/
+venv_backup/
