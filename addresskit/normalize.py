@@ -6,15 +6,18 @@ import argparse
 import csv
 import unicodedata
 import io
+import yaml  
+
 
 def _open_read_text(path: Path):
-    """Bytes -> text: önce UTF-8, olmazsa cp1254 (Windows Türkçe)."""
+    """Bytes -> text: önce UTF-8-SIG (BOM'u söker), olmazsa UTF-8, en son cp1254."""
     data = Path(path).read_bytes()
-    try:
-        text = data.decode("utf-8")
-    except UnicodeDecodeError:
-        text = data.decode("cp1254")
-    return io.StringIO(text)  # file-like object
+    for enc in ("utf-8-sig", "utf-8"):
+        try:
+            return io.StringIO(data.decode(enc))
+        except UnicodeDecodeError:
+            pass
+    return io.StringIO(data.decode("cp1254"))
 
 def tr_safe_lower(s: str) -> str:
     if not s:
@@ -24,30 +27,55 @@ def tr_safe_lower(s: str) -> str:
     s = s.lower()
     return unicodedata.normalize("NFC", s)
 
-def normalize_text(addr: str) -> str:
-    addr = tr_safe_lower(addr)
-    return " ".join(addr.split())
+def load_cfg(cfg_path: str) -> dict:
+    p = Path(cfg_path)
+    if not p.exists():
+        return {}
+    with p.open("r", encoding="utf-8") as f:
+        return yaml.safe_load(f) or {}
+
+def normalize_text(addr: str, cfg: dict) -> str:
+    if addr is None:
+        addr = ""
+    for k, v in (cfg.get("replace") or {}).items():
+        addr = addr.replace(k, v)
+    if cfg.get("lowercase", True):
+        addr = tr_safe_lower(addr)
+    if cfg.get("strip_extra_spaces", True):
+        addr = " ".join(addr.split())
+    return addr
 
 def normalize_address(input_path, output_path, config_path):
     src = Path(input_path)
     dst = Path(output_path)
+    cfg = load_cfg(config_path)
     dst.parent.mkdir(parents=True, exist_ok=True)
 
-    with _open_read_text(src) as f_in, dst.open("w", encoding="utf-8", newline="") as f_out:
+    with _open_read_text(src) as f_in, dst.open("w", encoding="utf-8-sig", newline="") as f_out:
         r = csv.DictReader(f_in)
-        fieldnames = r.fieldnames or []
-        if "address" in fieldnames and "address_norm" not in fieldnames:
-            fieldnames = fieldnames + ["address_norm"]
-        elif "address" not in fieldnames:
-            fieldnames = ["address", "address_norm"]
 
-        w = csv.DictWriter(f_out, fieldnames=fieldnames)
+        # Header'ı temizle (BOM/boşluk)
+        fns = r.fieldnames or []
+        fns = [ (fn or "").lstrip("\ufeff").strip() for fn in fns ]
+        r.fieldnames = fns  # DictReader bundan sonra bu isimleri kullanacak
+
+        # Çıkış alanları
+        if "address" in r.fieldnames and "address_norm" not in r.fieldnames:
+            out_fields = r.fieldnames + ["address_norm"]
+        elif "address" not in r.fieldnames:
+            out_fields = ["address", "address_norm"]
+        else:
+            out_fields = r.fieldnames
+
+        w = csv.DictWriter(f_out, fieldnames=out_fields)
         w.writeheader()
 
         for row in r:
-            addr = (row.get("address") or "").strip()
-            row["address_norm"] = normalize_text(addr)
-            w.writerow(row)
+            # Sadece çıkış alanlarını taşı (fazla key -> ValueError engellenir)
+            safe_row = {k: row.get(k, "") for k in out_fields}
+            addr = (safe_row.get("address") or "").strip()
+            safe_row["address_norm"] = normalize_text(addr, cfg)
+            w.writerow(safe_row)
 
     print(f"[normalize] wrote -> {dst}  (config={config_path})")
 
