@@ -1,0 +1,11 @@
+﻿[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "address-hackathon"
+version = "0.0.1"
+dependencies = ["pyyaml"]
+
+[tool.setuptools]
+packages = { find = { include = ["addresskit*"] } }
