@@ -1,9 +1,8 @@
-# configs/normalize.yaml
 lowercase: true
 strip_extra_spaces: true
-
-# İsteğe bağlı değişim haritası: soldaki metni sağdakiyle değiştirir
-replace:
-  " cd.": " cadde"
-  " sk.": " sokak"
-  " mah.": " mahalle"
+strip_punctuation: true   # noktalama temizliği
+fold_chars: tr            # TR güvenli küçültme
+abbreviations:
+  sokak: sk
+  cadde: cd
+stopwords: ["mahallesi", "mah.", "no", "daire"]
