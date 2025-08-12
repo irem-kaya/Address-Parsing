@@ -1,8 +1,25 @@
+fold_chars: tr
 lowercase: true
+strip_punctuation: false
 strip_extra_spaces: true
-strip_punctuation: true   # noktalama temizliği
-fold_chars: tr            # TR güvenli küçültme
+
+replace:
+  " No:": " no "
+  " No ": " no "
+
 abbreviations:
-  sokak: sk
-  cadde: cd
-stopwords: ["mahallesi", "mah.", "no", "daire"]
+  mh.: mahalle
+  mah.: mahalle
+  cd.: cadde
+  cad.: cadde
+  sk.: sokak
+  sok.: sokak
+  blv.: bulvar
+  blvd.: bulvar
+
+stopwords:
+  - türkiye
+
+regex:
+  - { pattern: "\\bno\\s*[:=]?", repl: " no " }
+  - { pattern: "\\s{2,}", repl: " " }
