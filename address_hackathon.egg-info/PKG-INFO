@@ -1,6 +1,0 @@
-Metadata-Version: 2.4
-Name: address-hackathon
-Version: 0.0.1
-Requires-Python: >=3.11
-Requires-Dist: pyyaml
-Requires-Dist: rapidfuzz
