@@ -3,19 +3,22 @@ import unicodedata
 from pathlib import Path
 import yaml
 
+
 def tr_safe_lower(s: str) -> str:
     if not s:
         return ""
-    s = s.replace("\u0130", "I")   # İ -> I
-    s = s.replace("\u0307", "")    # combining dot
+    s = s.replace("\u0130", "I")  # İ -> I
+    s = s.replace("\u0307", "")  # combining dot
     s = s.lower()
     return unicodedata.normalize("NFC", s)
+
 
 def _norm_key(name: str) -> str:
     if not name:
         return ""
     k = tr_safe_lower(name).strip()
     return re.sub(r"[.\s_]+", "", k)  # boşluk/nokta/altçizgi kaldır
+
 
 def pick_address_col(fieldnames: list[str] | None) -> str | None:
     """'address' yoksa 'adres' vb. varyasyonları yakala; yoksa ilk kolonu seç."""
@@ -27,12 +30,14 @@ def pick_address_col(fieldnames: list[str] | None) -> str | None:
             return orig
     return fieldnames[0]
 
+
 def load_cfg(cfg_path: str) -> dict:
     p = Path(cfg_path)
     if not p.exists():
         return {}
     with p.open("r", encoding="utf-8") as f:
         return yaml.safe_load(f) or {}
+
 
 def normalize_text(addr: str, cfg: dict) -> str:
     """YAML konfige göre adım adım normalizasyon uygular."""
@@ -54,7 +59,7 @@ def normalize_text(addr: str, cfg: dict) -> str:
         addr = re.sub(r"[^\w\s/]", " ", addr, flags=re.UNICODE)
 
     # regex kuralları
-    for rule in (cfg.get("regex") or []):
+    for rule in cfg.get("regex") or []:
         pat = rule.get("pattern")
         repl = rule.get("repl", "")
         if pat:
