@@ -40,6 +40,41 @@ def load_cfg(cfg_path: str) -> dict:
 
 
 def normalize_text(addr: str, cfg: dict) -> str:
+    addr = addr or ""
+
+    # 1) TR-güvenli lowercase ÖNCE
+    if cfg.get("lowercase", True):
+        addr = tr_safe_lower(addr)
+
+    # 2) Regex kuralları
+    for rule in cfg.get("regex") or []:
+        try:
+            pat = rule.get("pattern")
+            repl = rule.get("repl", "")
+            if pat:
+                addr = re.sub(pat, repl, addr)
+        except Exception:
+            pass
+
+    # 3) Basit replace (artık hepsi küçük harf)
+    for k, v in (cfg.get("replace") or {}).items():
+        addr = addr.replace(k, v)
+
+    # 4) Kısaltmalar (kelime sınırıyla)
+    abbr = cfg.get("abbreviations") or {}
+    for src, tgt in abbr.items():
+        addr = re.sub(rf"\b{re.escape(src)}\b", str(tgt), addr, flags=re.UNICODE)
+
+    # 5) Noktalama temizliği (opsiyonel)
+    if cfg.get("strip_punctuation", False):
+        addr = re.sub(r"[^\w\s]", " ", addr, flags=re.UNICODE)
+
+    # 6) Fazla boşluk
+    if cfg.get("strip_extra_spaces", True):
+        addr = " ".join(addr.split())
+
+    return addr
+
     """YAML konfige göre adım adım normalizasyon uygular."""
     if not addr:
         addr = ""

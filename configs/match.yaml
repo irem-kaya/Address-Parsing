@@ -1,2 +1,12 @@
-method: index
-threshold: 0.8
+﻿method: fuzzy
+scorer: token_set_ratio
+threshold: 90
+text_col: address_norm
+
+# Hız ve kalite için bloklama (aynı kovada kıyasla)
+block_by: first_token   # il/ilçe kolonu varsa: city  veya district yazabilirsin
+
+# Eşleşmeyenleri de yaz
+write_unmatched: true
+unmatched_left:  data/processed/unmatched_left.csv
+unmatched_right: data/processed/unmatched_right.csv
