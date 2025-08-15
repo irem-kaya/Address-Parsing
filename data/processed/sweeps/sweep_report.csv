@@ -1,0 +1,13 @@
+scorer,threshold,pairs,mean_score,min_score
+token_set_ratio,70,10,96.54,85.96
+token_set_ratio,80,10,96.54,85.96
+token_set_ratio,85,10,96.54,85.96
+token_set_ratio,90,9,97.72,91.85
+ratio,70,9,95.69,79.75
+partial_ratio,70,9,94.41,78.63
+ratio,80,8,97.69,93.32
+ratio,85,8,97.69,93.32
+ratio,90,8,97.69,93.32
+partial_ratio,80,8,96.38,88.88
+partial_ratio,85,8,96.38,88.88
+partial_ratio,90,7,97.46,91.78
