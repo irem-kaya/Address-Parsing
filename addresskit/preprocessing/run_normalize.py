@@ -4,6 +4,7 @@ import csv
 import io
 from .clean_text import load_cfg, normalize_text, pick_address_col
 
+
 def _open_read_text(path: Path):
     """Bytes->Text: UTF-8-SIG → UTF-8 → CP1254 (TR)."""
     data = Path(path).read_bytes()
@@ -13,6 +14,7 @@ def _open_read_text(path: Path):
         except UnicodeDecodeError:
             pass
     return io.StringIO(data.decode("cp1254"))
+
 
 def normalize_address(input_path, output_path, config_path):
     src = Path(input_path)
@@ -48,12 +50,14 @@ def normalize_address(input_path, output_path, config_path):
 
     print(f"[normalize] wrote -> {dst}  (config={config_path})")
 
+
 def _parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--input", required=True)
     p.add_argument("--output", required=True)
     p.add_argument("--config", required=True)
     return p.parse_args()
+
 
 if __name__ == "__main__":
     args = _parse_args()

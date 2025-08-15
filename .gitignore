@@ -8,3 +8,4 @@ git remote set-url origin https://github.com/irem-kaya/address-hackathon.git .ve
 data/
 .venv/
 venv_backup/
+address_hackathon.egg-info/

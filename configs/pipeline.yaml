@@ -1,0 +1,15 @@
+normalize:
+  config: configs/normalize.yaml
+  left_in:  data/raw/left.csv
+  left_out: data/interim/left_norm.csv
+  right_in: data/raw/right.csv
+  right_out: data/interim/right_norm.csv
+
+match:
+  config: configs/match.yaml
+  left:   data/interim/left_norm.csv
+  right:  data/interim/right_norm.csv
+  out:    data/processed/match.csv
+
+preview:
+  out:    data/processed/match_preview.csv
