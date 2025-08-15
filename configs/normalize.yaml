@@ -1,28 +1,61 @@
+# configs/normalize.yaml
+
+fold_chars: tr
 lowercase: true
 strip_extra_spaces: true
 
-# İngilizce yol türlerini TR'ye çevir
+# 1) Noktalama/ayraçları tek boşluğa indir
 regex:
-  - pattern: "\\bstreet\\b"
-    repl: "sokak"
-  - pattern: "\\bst\\.\\b"
-    repl: "sokak"
-  - pattern: "\\bavenue\\b"
-    repl: "cadde"
-  - pattern: "\\bave\\.\\b"
-    repl: "cadde"
-
-  # no:107 / no. 107 / no107 → no 107
-  - pattern: "\\bno\\s*[:\\.]?\\s*(\\d+)\\b"
-    repl: "no \\1"
-
-  # fazla noktalama → boşluk
-  - pattern: "\\s*[.,]+\\s*"
+  # Tırnak işaretlerini temizle
+  - pattern: '["''“”„«»]+'
     repl: " "
+  # Slash, nokta, virgül, iki nokta, parantez, tire vb. -> tek boşluk
+  - pattern: '\s*[/\.,;:|()\-–—]+\s*'
+    repl: " "
+  # Türkçe kısaltmaları genişlet (regex formunda)
+  - pattern: '\bm[ıi]h\.?\b'
+    repl: 'mahalle'
+  - pattern: '\b(cadd?\.?|cad\.?)\b'
+    repl: 'cadde'
+  - pattern: '\b(sk\.?|sok\.?)\b'
+    repl: 'sokak'
+  # Yazım hatası: skak -> sokak
+  - pattern: '\bskak\b'
+    repl: 'sokak'
+  # "cadde2" / "sokak12" -> araya boşluk
+  - pattern: '\b(cadde|sokak|no)\s*([0-9]+)\b'
+    repl: '\1 \2'
+  # Çifte boşlukları sadeleştir (ek güvenlik)
+  - pattern: '\s{2,}'
+    repl: ' '
+  - pattern: "\\b(st|st\\.|street)\\b"
+    repl: "sokak"
+  - pattern: "\\b(ave|ave\\.|avenue)\\b"
+    repl: "cadde"  
 
+# 2) Basit kelime bazlı replace (İngilizce -> Türkçe)
+replace:
+  " street": " sokak"
+  " st.": " sokak"
+  " avenue": " cadde"
+  " ave.": " cadde"
+
+# 3) Kısaltmalar (regex sonrası kelime kelime)
 abbreviations:
-  mh: mahalle
-  mah: mahalle
-  cad: cadde
-  cadd: cadde
-  sk: sokak
+  "mh": "mahalle"
+  "mah": "mahalle"
+  "mah.": "mahalle"
+  "cad": "cadde"
+  "cadd": "cadde"
+  "cadd.": "cadde"
+  "sk": "sokak"
+  "sk.": "sokak"
+  "no": "no"
+  "no.": "no"
+# --- yeni bayraklar ---
+fix_mojibake: true         # UTF-8 → cp1252/cp1254 yanlış okuma düzelt
+fold_diacritics: true      # çğışöü → c g i s o u
+
+
+
+

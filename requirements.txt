@@ -2,3 +2,4 @@ pyyaml
 pyyaml
 rapidfuzz
 pyyaml
+pandas>=2.2.0
