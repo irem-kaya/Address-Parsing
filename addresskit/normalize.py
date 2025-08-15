@@ -14,7 +14,7 @@ import yaml
 
 
 # --------------------------------
-# I/O helpers
+# I/O helpers. khsfksfh
 # --------------------------------
 def _open_read_text(path: str | Path):
     """Bytes -> text: UTF-8-SIG -> UTF-8 -> cp1254 fallback."""
