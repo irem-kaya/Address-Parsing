@@ -1,8 +1,13 @@
+<<<<<<< HEAD
+=======
+---
+>>>>>>> irem/main
 lowercase: true
 strip_punct: true            # .,;:!?()[]{} gibi işaretleri boşluğa çevir
 collapse_spaces: true
 ascii_fold_secondary: true   # ikincil alan için ascii versiyonunu da üret
 
+<<<<<<< HEAD
 expand_abbr:                 # yaygın kısaltmaları genişlet
   cd: ["cad","cad.","cadd","cadd.","cde","c."]       # → cadde
   blv: ["blv.","bulv","bulv.","bv"]                   # → bulvar
@@ -12,8 +17,27 @@ expand_abbr:                 # yaygın kısaltmaları genişlet
   d:  ["daire","d.","d "]                             # → daire
   no: ["no.","no:","no-","no "]                       # → no
   cdde: ["c.","c "]                                   # → cadde
+=======
+expand_abbr:
+  mahalle: ["mah", "mah.", "mh", "mh."]
+  sokak: ["sk", "sk.", "sok", "sok."]
+  cadde: ["cd", "cd.", "cad", "cad.", "caddesi", "cadd."]
+  bulvar: ["blv", "blv.", "bulv", "bulv."]
+  no: ["no", "no.", "no:", "no-"]
+  kat: ["k", "k.", "kat"]
+  daire: ["d", "d.", "daire", "da."]
+               # yaygın kısaltmaları genişlet
+  cd: ["cad", "cad.", "cadd", "cadd.", "cde", "c."]
+  blv: ["blv.", "bulv", "bulv.", "bv"]
+  sk: ["sk.", "sok.", "sokağı", "sokağı.", "sok", "sok."]
+  mh: ["mah", "mah.", "mh.", "m."]
+  k:  ["kat", "k.", "k "]
+  d:  ["daire", "d.", "d "]
+  no: ["no.", "no:", "no-", "no "]
+  cdde: ["c.", "c "]
+>>>>>>> irem/main
 
-canonical_map:               # nihai hedef yazımlar
+canonical_map:
   cadde: "cadde"
   sokak: "sokak"
   mahalle: "mahalle"
@@ -22,24 +46,35 @@ canonical_map:               # nihai hedef yazımlar
   kat: "kat"
   daire: "daire"
 
-remove_terms:                # gürültü / kurum son ekleri
-  - "apt"                    # apartman → gerektiğinde 'apartman' yazılır
-  - "sitesi sitesi"          # çiftleme
-  - "turkiye cumhuriyeti devleti"   # nadir ama temizle
+remove_terms:
+  - "apt"
+  - "sitesi sitesi"
+  - "turkiye cumhuriyeti devleti"
   - "tc"
 
-# Parça çıkarımı (regex bileşenleri)
 parts:
-  mahalle:  "(?:mahalle|mah)\\s+([A-Za-zÇĞİÖŞÜçğıöşü0-9._\\- ]{2,})"
-  sokak:    "(?:sokak|sk)\\s+([\\p{L}0-9._\\- ]{1,})"
-  cadde:    "(?:cadde|cd|caddesi|bulvar|blv)\\s+([\\p{L}0-9._\\- ]{1,})"
-  no:       "(?:no)\\s*([0-9]{1,5}[A-Za-z]?)"
-  daire:    "(?:daire|d)\\s*([0-9]{1,5}[A-Za-z]?)"
-  kat:      "(?:kat|k)\\s*([0-9]{1,3})"
+  mahalle: "(?:mahalle|mah)\\s+([A-Za-zÇĞİÖŞÜçğıöşü0-9._\\- ]{2,})"
+  sokak:   "(?:sokak|sk)\\s+([\\p{L}0-9._\\- ]{1,})"
+  cadde:   "(?:cadde|cd|caddesi|bulvar|blv)\\s+([\\p{L}0-9._\\- ]{1,})"
+  no:      "(?:no)\\s*([0-9]{1,5}[A-Za-z]?)"
+  daire:   "(?:daire|d)\\s*([0-9]{1,5}[A-Za-z]?)"
+  kat:     "(?:kat|k)\\s*([0-9]{1,3})"
 
-# Token koruma (silinmesin)
-keep_tokens: ["mahalle","cadde","sokak","bulvar","no","kat","daire"]
+keep_tokens: ["mahalle", "cadde", "sokak", "bulvar", "no", "kat", "daire"]
 
-# İl/ilçe sözlüğü (opsiyonel; bugün sadece çıkarıma hazırlık)
 geo:
+<<<<<<< HEAD
   il_list: ["adana","adiyaman","afyonkarahisar","agri","amasya","ankara","antalya","artvin","aydin","balikesir","bilecik","bingol","bitlis","bolu","burdur","bursa","canakkale","cankiri","corum","denizli","diyarbakir","edirne","elazig","erzincan","erzurum","eskisehir","gaziantep","giresun","gumushane","hakkari","hatay","isparta","mersin","istanbul","izmir","kars","kastamonu","kayseri","kirklareli","kirsehir","kocaeli","konya","kutahya","malatya","manisa","kahramanmaras","mardin","mugla","mus","nevsehir","nigde","ordu","rize","sakarya","samsun","siirt","sinop","sivas","tekirdag","tokat","trabzon","tunceli","sanliurfa","usak","van","yozgat","zonguldak","aksaray","bayburt","karaman","kirikkale","batman","sirnak","bartin","ardahan","igdir","yalova","karabuk","kilis","osmaniye","duzce"]
+=======
+  il_list: [
+    "adana", "adiyaman", "afyonkarahisar", "agri", "amasya", "ankara", "antalya", "artvin", "aydin",
+    "balikesir", "bilecik", "bingol", "bitlis", "bolu", "burdur", "bursa", "canakkale", "cankiri", "corum",
+    "denizli", "diyarbakir", "edirne", "elazig", "erzincan", "erzurum", "eskisehir", "gaziantep", "giresun",
+    "gumushane", "hakkari", "hatay", "isparta", "mersin", "istanbul", "izmir", "kars", "kastamonu", "kayseri",
+    "kirklareli", "kirsehir", "kocaeli", "konya", "kutahya", "malatya", "manisa", "kahramanmaras", "mardin",
+    "mugla", "mus", "nevsehir", "nigde", "ordu", "rize", "sakarya", "samsun", "siirt", "sinop", "sivas",
+    "tekirdag", "tokat", "trabzon", "tunceli", "sanliurfa", "usak", "van", "yozgat", "zonguldak", "aksaray",
+    "bayburt", "karaman", "kirikkale", "batman", "sirnak", "bartin", "ardahan", "igdir", "yalova", "karabuk",
+    "kilis", "osmaniye", "duzce"
+  ]
+>>>>>>> irem/main
