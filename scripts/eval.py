@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 ﻿import argparse
+=======
+import argparse
+>>>>>>> 1d15612510d527482fcc04e8faa4249e66983a44
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
+
 
 def main():
     parser = argparse.ArgumentParser(description="Evaluate address matching predictions")
@@ -13,8 +18,6 @@ def main():
     pred = pd.read_csv(args.pred)
 
     # Kolon isimleri tahmin edilen formata göre ayarla
-    # gold: id,left_address,right_address,match
-    # pred: id,match (veya benzer)
     if "match" not in pred.columns:
         raise ValueError("Prediction file must contain a 'match' column.")
 
@@ -30,5 +33,9 @@ def main():
     print(f"Accuracy: {acc:.4f}")
     print(f"F1 Score: {f1:.4f}")
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1d15612510d527482fcc04e8faa4249e66983a44
 if __name__ == "__main__":
     main()
