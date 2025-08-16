@@ -1,8 +1,15 @@
+<<<<<<< HEAD
+=======
+# configs/normalize.yaml
+
+fold_chars: tr
+>>>>>>> f3a69242bb20942eb83b5471dc20cc8ed3b34b24
 lowercase: true
 strip_punct: true            # .,;:!?()[]{} gibi işaretleri boşluğa çevir
 collapse_spaces: true
 ascii_fold_secondary: true   # ikincil alan için ascii versiyonunu da üret
 
+<<<<<<< HEAD
 expand_abbr:                 # yaygın kısaltmaları genişlet
   cd: ["cad","cad.","cadd","cadd.","cde","c."]       # → cadde
   blv: ["blv.","bulv","bulv.","bv"]                   # → bulvar
@@ -43,3 +50,60 @@ keep_tokens: ["mahalle","cadde","sokak","bulvar","no","kat","daire"]
 # İl/ilçe sözlüğü (opsiyonel; bugün sadece çıkarıma hazırlık)
 geo:
   il_list: ["adana","adiyaman","afyonkarahisar","agri","amasya","ankara","antalya","artvin","aydin","balikesir","bilecik","bingol","bitlis","bolu","burdur","bursa","canakkale","cankiri","corum","denizli","diyarbakir","edirne","elazig","erzincan","erzurum","eskisehir","gaziantep","giresun","gumushane","hakkari","hatay","isparta","mersin","istanbul","izmir","kars","kastamonu","kayseri","kirklareli","kirsehir","kocaeli","konya","kutahya","malatya","manisa","kahramanmaras","mardin","mugla","mus","nevsehir","nigde","ordu","rize","sakarya","samsun","siirt","sinop","sivas","tekirdag","tokat","trabzon","tunceli","sanliurfa","usak","van","yozgat","zonguldak","aksaray","bayburt","karaman","kirikkale","batman","sirnak","bartin","ardahan","igdir","yalova","karabuk","kilis","osmaniye","duzce"]
+=======
+# 1) Noktalama/ayraçları tek boşluğa indir
+regex:
+  # Tırnak işaretlerini temizle
+  - pattern: '["''“”„«»]+'
+    repl: " "
+  # Slash, nokta, virgül, iki nokta, parantez, tire vb. -> tek boşluk
+  - pattern: '\s*[/\.,;:|()\-–—]+\s*'
+    repl: " "
+  # Türkçe kısaltmaları genişlet (regex formunda)
+  - pattern: '\bm[ıi]h\.?\b'
+    repl: 'mahalle'
+  - pattern: '\b(cadd?\.?|cad\.?)\b'
+    repl: 'cadde'
+  - pattern: '\b(sk\.?|sok\.?)\b'
+    repl: 'sokak'
+  # Yazım hatası: skak -> sokak
+  - pattern: '\bskak\b'
+    repl: 'sokak'
+  # "cadde2" / "sokak12" -> araya boşluk
+  - pattern: '\b(cadde|sokak|no)\s*([0-9]+)\b'
+    repl: '\1 \2'
+  # Çifte boşlukları sadeleştir (ek güvenlik)
+  - pattern: '\s{2,}'
+    repl: ' '
+  - pattern: "\\b(st|st\\.|street)\\b"
+    repl: "sokak"
+  - pattern: "\\b(ave|ave\\.|avenue)\\b"
+    repl: "cadde"  
+
+# 2) Basit kelime bazlı replace (İngilizce -> Türkçe)
+replace:
+  " street": " sokak"
+  " st.": " sokak"
+  " avenue": " cadde"
+  " ave.": " cadde"
+
+# 3) Kısaltmalar (regex sonrası kelime kelime)
+abbreviations:
+  "mh": "mahalle"
+  "mah": "mahalle"
+  "mah.": "mahalle"
+  "cad": "cadde"
+  "cadd": "cadde"
+  "cadd.": "cadde"
+  "sk": "sokak"
+  "sk.": "sokak"
+  "no": "no"
+  "no.": "no"
+# --- yeni bayraklar ---
+fix_mojibake: true         # UTF-8 → cp1252/cp1254 yanlış okuma düzelt
+fold_diacritics: true      # çğışöü → c g i s o u
+
+
+
+
+>>>>>>> f3a69242bb20942eb83b5471dc20cc8ed3b34b24

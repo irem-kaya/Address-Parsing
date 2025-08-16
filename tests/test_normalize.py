@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿import yaml
 from addresskit.preprocessing.clean_text import normalize_text, extract_parts
 
@@ -13,3 +14,6 @@ def test_parts():
     assert parts["no"] == "7"
     assert parts["kat"] == "2"
     assert parts["daire"] == "5"
+=======
+﻿
+>>>>>>> f3a69242bb20942eb83b5471dc20cc8ed3b34b24
