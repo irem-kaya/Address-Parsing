@@ -1,27 +1,14 @@
-<<<<<<< HEAD
 import argparse
-from .matching.string_similarity import run_match
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--train", required=True)
-    ap.add_argument("--test", required=True)
-    ap.add_argument("--out", required=True)
-    args = ap.parse_args()
-
-    run_match(args.train, args.test, args.out)
-=======
-"""
-Matching module for address data (blocking + confidence + stopword gating).
-"""
-
 from pathlib import Path
-import argparse
 import csv
 import io
 import unicodedata
 import yaml
 from rapidfuzz import fuzz
+
+"""
+Matching module for address data (blocking + confidence + stopword gating).
+"""
 
 # internal modules
 from addresskit.matching.blocking import group_by_block
@@ -31,7 +18,6 @@ from addresskit.scoring.confidence import (
     geo_score_km,
     combine_scores,
 )
-
 
 # ---------- helpers ----------
 def _open_read_text(path: str | Path):
@@ -115,9 +101,7 @@ def match_addresses(left_path, right_path, output_path, config_path):
         thr = 80.0
 
     topk = int(cfg.get("topk", 1))
-    block_by = cfg.get(
-        "block_by", ""
-    )  # "", "prefix8", "digits+prefix6", "province+district"
+    block_by = cfg.get("block_by", "")
     write_unmatched = bool(cfg.get("write_unmatched", True))
 
     # scorer
@@ -136,7 +120,7 @@ def match_addresses(left_path, right_path, output_path, config_path):
     w_geo = float(wcfg.get("geo", 0.2))
     max_km = float(cfg.get("geo_max_km", 1.5))
 
-    # semantic stopwords (yanlış-pozitifleri kısmak için)
+    # semantic stopwords
     stops = set(
         t.strip()
         for t in (cfg.get("semantic_stopwords") or [])
@@ -210,7 +194,6 @@ def match_addresses(left_path, right_path, output_path, config_path):
 
                 best = []
                 for rrow, rtxt, rtok, rlat, rlon in r_pre:
-                    # stopword hariç ortak token yoksa skorlamayı atla
                     if stops and not (ltok & rtok):
                         continue
 
@@ -225,9 +208,7 @@ def match_addresses(left_path, right_path, output_path, config_path):
                         and (rlon is not None)
                     ):
                         g_km = haversine_km(llat, llon, rlat, rlon)
-                    g_s = (
-                        geo_score_km(g_km, max_km=max_km) if g_km is not None else None
-                    )
+                    g_s = geo_score_km(g_km, max_km=max_km) if g_km is not None else None
 
                     conf = combine_scores(
                         text_s, d_s, g_s, w_text=w_text, w_digits=w_digits, w_geo=w_geo
@@ -290,7 +271,11 @@ def _parse_args():
     p.add_argument("--out", required=True)
     p.add_argument("--config", required=True)
     return p.parse_args()
->>>>>>> f3a69242bb20942eb83b5471dc20cc8ed3b34b24
+
+
+def main():
+    args = _parse_args()
+    match_addresses(args.left, args.right, args.out, args.config)
 
 
 if __name__ == "__main__":
