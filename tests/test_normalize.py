@@ -1,6 +1,6 @@
 ﻿import yaml
 from addresskit.preprocessing.clean_text import normalize_text, extract_parts
-import regex as re
+import re
 
 cfg = yaml.safe_load(open("configs/normalize.yaml", encoding="utf-8"))
 
@@ -13,5 +13,5 @@ def extract_parts(text, cfg):
     for key, pattern in cfg["parts"].items():
         m = re.search(pattern, text)
         if m:
-            parts[key] = m.group(1)  # 👈 her zaman key'i doğru ata
+            parts[key] = m.group(1)  
     return parts
