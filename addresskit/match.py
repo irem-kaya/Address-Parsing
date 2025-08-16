@@ -10,5 +10,6 @@ def main():
 
     run_match(args.train, args.test, args.out)
 
+
 if __name__ == "__main__":
     main()
