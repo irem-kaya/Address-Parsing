@@ -2,24 +2,19 @@ import argparse
 import pandas as pd
 from sklearn.metrics import accuracy_score, f1_score
 
-
 def main():
     parser = argparse.ArgumentParser(description="Evaluate address matching predictions")
     parser.add_argument("--gold", required=True, help="Path to ground truth CSV (train.csv)")
     parser.add_argument("--pred", required=True, help="Path to prediction CSV (submission.csv)")
     args = parser.parse_args()
 
-    # Doğru veriyi oku
     gold = pd.read_csv(args.gold)
     pred = pd.read_csv(args.pred)
 
-    # Prediction dosyasında 'match' kolonu kontrol et
     if "match" not in pred.columns:
         raise ValueError("Prediction file must contain a 'match' column.")
 
-    # ID üzerinden merge et
     merged = gold.merge(pred, on="id", suffixes=("_true", "_pred"))
-
     y_true = merged["match_true"]
     y_pred = merged["match_pred"]
 
@@ -28,7 +23,6 @@ def main():
 
     print(f"Accuracy: {acc:.4f}")
     print(f"F1 Score: {f1:.4f}")
-
 
 if __name__ == "__main__":
     main()
