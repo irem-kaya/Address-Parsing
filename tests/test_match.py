@@ -27,3 +27,7 @@ def test_match(tmp_path: Path):
         and rows[1]["right_id"] == "1"
         and float(rows[1]["score"]) == 1.0
     )
+def match_addresses(address1: str, address2: str) -> float:
+    # örnek: basit benzerlik
+    from difflib import SequenceMatcher
+    return SequenceMatcher(None, address1, address2).ratio()
