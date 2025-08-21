@@ -13,7 +13,9 @@ from typing import Dict, Tuple, Optional
 import pandas as pd
 
 # ---------------- I/O ----------------
-RAW_DIR = os.path.join("data", "raw")
+ROOT_DIR = os.path.dirname(os.path.dirname(__file__))  # repo kökü
+RAW_DIR = os.path.join(ROOT_DIR, "data", "raw")
+OUT_DIR = os.path.join(ROOT_DIR, "data", "processed")
 OUT_DIR = os.path.join("data", "processed")
 os.makedirs(OUT_DIR, exist_ok=True)
 

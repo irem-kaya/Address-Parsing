@@ -5,33 +5,33 @@ from collections import Counter
 import pandas as pd
 import numpy as np
 
-# --- Veri yolu tespiti (Windows/macOS/Linux için güvenli) ---
+# --- Veri yolu tespiti (platform bağımsız) ---
+HERE = os.path.dirname(__file__)
+ROOT = os.path.abspath(os.path.join(HERE, ".."))             # repo kökü (address-hackathon)
 CANDIDATES = [
-    "data/raw/train.csv",
-    "data/train.csv",
-    "train.csv",
-    os.path.join(os.path.dirname(__file__), "..", "data", "raw", "train.csv"),
-    os.path.join(os.path.dirname(__file__), "..", "data", "train.csv"),
+    os.path.join(ROOT, "data", "raw", "train.csv"),          # repo kökünden
+    r"C:\Users\iremn\hackathon\address-hackathon\data\raw\train.csv",  # senin makine
 ]
+
 DATA_PATH = None
-for p in CANDIDATES:
-    p = os.path.abspath(p)
-    if os.path.exists(p):
-        DATA_PATH = p
+for path in CANDIDATES:
+    full_path = os.path.abspath(path)
+    if os.path.exists(full_path):
+        DATA_PATH = full_path
         break
+
 if DATA_PATH is None:
-    raise FileNotFoundError(
-        "train.csv bulunamadı. Lütfen dosyayı 'data/raw/train.csv' altına koyun "
-        "veya DeepEDA.py içindeki CANDIDATES listesine doğru yolu ekleyin."
-)
-print(f"[EDA] Kullanılan train yolu: {DATA_PATH}")
+    raise FileNotFoundError("train.csv hiçbir candidate path içinde bulunamadı")
+
+print("[EDA] Kullanılan train yolu:", DATA_PATH)
+df = pd.read_csv(DATA_PATH)   # <-- SADECE BİR KEZ OKU
 
 # ----------------------------------
 # 0) Yollar ve I/O
 # ----------------------------------
-DATA_PATH = "data/raw/train.csv"   # Senin yüklediğin dosya yolu
-OUTDIR = "data/interim/eda_reports"
+OUTDIR = os.path.join(ROOT, "data", "interim", "eda_reports")
 os.makedirs(OUTDIR, exist_ok=True)
+
 
 # ----------------------------------
 # 1) Veri Yükleme ve Hızlı Şema
