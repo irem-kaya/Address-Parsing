@@ -2,7 +2,6 @@
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
 ![Status](https://img.shields.io/badge/Status-Geliştirme%20Aşamasında-yellow.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![CI](https://github.com/irem-kaya/address-hackathon/actions/workflows/ci.yml/badge.svg)
 ![Container](https://img.shields.io/badge/container-GHCR-blue)
 
@@ -77,7 +76,3 @@ Proje şu anda temel adres bileşenlerini ayrıştırabilen bir prototip aşamas
 * [İrem Nur Kaya](https://github.com/irem-kaya)
 * Büşra Gümüşay
 
----
-## 📜 Lisans
-
-Bu proje, **MIT Lisansı** ile lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakınız.
