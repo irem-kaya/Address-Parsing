@@ -4,6 +4,7 @@
 ![Status](https://img.shields.io/badge/Status-Geliştirme%20Aşamasında-yellow.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![CI](https://github.com/irem-kaya/address-hackathon/actions/workflows/ci.yml/badge.svg)
+![Container](https://img.shields.io/badge/container-GHCR-blue)
 
 Bu proje, bir hackathon kapsamında geliştirilmiş olup, standart olmayan, serbest metin formatındaki Türkçe adres verilerini ayrıştırarak il, ilçe, mahalle gibi yapısal bileşenlere dönüştürmeyi hedeflemektedir.
 
