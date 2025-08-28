@@ -73,8 +73,8 @@ Proje şu anda temel adres bileşenlerini ayrıştırabilen bir prototip aşamas
 ---
 ## 🤝 Katkıda Bulunanlar
 
-* [Adınız Soyadınız](https://github.com/github_kullanici_adiniz) - Proje Lideri
-* [Katkıda bulunan diğer kişilerin adları]
+* [İrem Nur Kaya](https://github.com/irem-kaya)
+* Büşra Gümüşay
 
 ---
 ## 📜 Lisans
