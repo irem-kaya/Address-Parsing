@@ -3,11 +3,11 @@
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue.svg)
 ![Status](https://img.shields.io/badge/Status-Geliştirme%20Aşamasında-yellow.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Tests](https://img.shields.io/badge/tests-passing-green.svg)
 
 Bu proje, bir hackathon kapsamında geliştirilmiş olup, standart olmayan, serbest metin formatındaki Türkçe adres verilerini ayrıştırarak il, ilçe, mahalle gibi yapısal bileşenlere dönüştürmeyi hedeflemektedir.
 
 ---
-
 ## 📜 İçindekiler
 - [Projenin Amacı ve Hedefi](#-projenin-amacı-ve-hedefi)
 - [Kullanılan Teknolojiler](#-kullanılan-teknolojiler)
@@ -18,7 +18,6 @@ Bu proje, bir hackathon kapsamında geliştirilmiş olup, standart olmayan, serb
 - [Lisans](#-lisans)
 
 ---
-
 ## 🎯 Projenin Amacı ve Hedefi
 
 Türkiye'deki adres verileri genellikle standart bir formattan yoksundur ve kullanıcılar tarafından serbest metin olarak girilir. Bu durum, adres verilerini analiz etmeyi, coğrafi bilgi sistemlerinde kullanmayı veya veritabanlarında tutarlı bir şekilde saklamayı zorlaştırır.
@@ -34,75 +33,50 @@ yapısal hale getirerek şu bileşenlere ayırmaktır:
 - **Daire No:** 5
 
 ---
-
 ## 💻 Kullanılan Teknolojiler
-* **Python 3.9+**
-* **Pandas:** Veri manipülasyonu ve analizi için.
-* **NumPy:** Sayısal işlemler için.
-* **re (Regular Expressions):** Metin içindeki desenleri bulma ve ayrıştırma için.
-* **Jupyter Notebook:** Keşifsel veri analizi ve geliştirme süreci için.
-* **[Varsa diğer kütüphaneler, örn: Scikit-learn, Matplotlib, vb.]**
+
+Bu projede, adres ayrıştırma problemini çözmek için farklı yaklaşımlar denenmiş ve en iyi sonuçları veren yöntemlerin birleşimi hedeflenmiştir. Kullanılan temel teknolojiler ve denenen yaklaşımlar aşağıda sıralanmıştır:
+
+* **Python 3.9+:** Projenin ana programlama dilidir.
+* **Pandas & NumPy:** Büyük veri setlerinin temizlenmesi, manipülasyonu ve analizi için temel kütüphaneler olarak kullanılmıştır.
+* **Scikit-learn:** Makine öğrenmesi algoritmaları ve değerlendirme metrikleri için kullanılmıştır. Özellikle **BERT** modelinin çıktılarının sınıflandırılması ve model performansının ölçülmesi aşamalarında önemli rol oynamıştır.
+* **Matplotlib & Seaborn:** Veri setinin ve model sonuçlarının görselleştirilmesi için kullanılmıştır. Özellikle modelin doğru ve yanlış tahminlerinin analizinde, veri dağılımlarını anlamada ve sonuçları raporlamada faydalı olmuştur.
+* **Doğal Dil İşleme (NLP) Yaklaşımları:**
+    * **Regex (Regular Expressions):** Basit ve belirgin kalıpları (örneğin, "no:", "apt:", "mah.") ayrıştırmak için ilk aşama olarak kullanılmıştır. Farklı kalıpların bir araya getirildiği bir **Regex Ensemble** yapısı denenmiştir.
+    * **BERT Modelleri:** Daha karmaşık ve kalıp dışı adres metinlerini anlamak ve ayrıştırmak için çeşitli **BERT (Bidirectional Encoder Representations from Transformers)** modelleriyle denemeler yapılmıştır. Türkçe adres verileri üzerinde en iyi performansı verecek model arayışı, projenin kritik bir parçasını olmuştur. Bu modellerin eğitimi ve ince ayar (fine-tuning) süreçleri, projenin derinlemesine bir NLP çalışması olduğunu göstermektedir.
 
 ---
+## 🚧 Karşılaşılan Zorluklar ve Öğrenilenler
 
-## 🧗 Karşılaşılan Zorluklar ve Öğrenilenler
-
-Bu proje, özellikle hackathon'un kısıtlı süresi içinde, metin işleme konusundaki birçok zorluğu deneyimlemek için harika bir fırsat sundu.
-
-* **Türkçe Adres Yapısının Karmaşıklığı:** Türkçe adreslerdeki kısaltmalar (mah., cad., sk.), zorunlu olmayan alanlar ve bileşenlerin yer değiştirebilmesi, kural tabanlı (rule-based) bir sistem oluşturmayı zorlaştırdı.
-* **Veri Kalitesi ve Temizleme:** Çalışılan veri setindeki yazım hataları, tutarsızlıklar ve eksik bilgiler, projenin önemli bir zamanının veri ön işleme adımlarına ayrılmasını gerektirdi. Bu süreç, bir veri bilimi projesinde harcanan zamanın büyük bir kısmının neden veri ön işleme olduğunu somut bir şekilde göstermiştir.
-* **Hackathon Zaman Kısıtlaması:** Kısıtlı sürede, hedeflenen tüm özellikleri (örneğin makine öğrenmesi modeli entegrasyonu) tamamlamak mümkün olmadı. Bu deneyim, proje yönetimi ve kısıtlı sürede ulaşılabilir hedefler (MVP - Minimum Viable Product) belirlemenin önemini pekiştirdi.
+* **Türkçe Adreslerin Standart Olmaması:** En büyük zorluk, "mahallesi" yerine "mah.", "apartmanı" yerine "apt." gibi kısaltmaların ve yazım hatalarının yaygın olmasıdır.
+* **NLP Modelleri İçin Uygun Veri Seti Bulma:** Türkçe adresler için etiketlenmiş, kaliteli bir veri seti bulmak zorlayıcı olmuştur.
+* **Regex ve NLP Entegrasyonu:** Farklı yaklaşımların (Regex ve BERT) bir arada kullanılarak daha sağlam (robust) bir çözüm oluşturulması teknik bir meydan okuma olmuştur.
 
 ---
+## 📈 Projenin Mevcut Durumu ve Gelecek Adımlar
 
-## 🚀 Projenin Mevcut Durumu ve Gelecek Adımlar
-
-**Mevcut Durum:**
-Proje şu anki haliyle, adres metinlerindeki temel yazım hatalarını düzeltme, büyük/küçük harf standardizasyonu gibi temel temizlik adımlarını gerçekleştirmektedir. Ayrıca, il ve ilçe isimlerini bir referans listesiyle eşleştirerek adresin bu bileşenlerini başarıyla çıkarmaktadır.
-
-**Gelecek Adımlar:**
-Projeye devam edilmesi durumunda planlanan adımlar şunlardır:
-* [ ] **Regex Kurallarını Geliştirme:** Mahalle, cadde, sokak ve numara bilgilerini daha yüksek doğrulukla çıkarmak için kapsamlı Regex desenleri oluşturmak.
-* [ ] **Makine Öğrenmesi Yaklaşımı:** Özellikle karmaşık ve standart dışı adresler için Named Entity Recognition (NER) modellerini araştırmak ve eğitmek.
-* [ ] **API Servisi:** Geliştirilen ayrıştırıcıyı bir Flask/FastAPI servisi üzerinden kullanılabilir hale getirmek.
+Proje şu anda temel adres bileşenlerini ayrıştırabilen bir prototip aşamasındadır. Gelecek adımlar şunları içerecektir:
+* [ ] Daha büyük ve çeşitli adres verileriyle modelin performansını artırmak.
+* [ ] Kullanıcı dostu bir API veya arayüz oluşturarak projenin pratik kullanımını sağlamak.
+* [ ] Coğrafi koordinat verilerini (latitude, longitude) entegre ederek adresleri harita üzerinde görselleştirmek.
 
 ---
+## 🚀 Kurulum ve Çalıştırma
 
-## 🛠️ Kurulum ve Çalıştırma
-
-Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyebilirsiniz:
-
-1.  **Depoyu klonlayın:**
-    ```bash
-    git clone [https://github.com/irem-kaya/address-hackathon.git](https://github.com/irem-kaya/address-hackathon.git)
-    cd address-hackathon
-    ```
-
-2.  **Sanal ortam oluşturun ve aktif edin:**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # Windows için: venv\Scripts\activate
-    ```
-
-3.  **Gerekli kütüphaneleri yükleyin:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-    *(Not: Henüz bir `requirements.txt` dosyanız yoksa, `pip freeze > requirements.txt` komutuyla oluşturabilirsiniz.)*
-
-4.  **Jupyter Notebook'u çalıştırın:**
-    ```bash
-    jupyter notebook
-    ```
+1.  Bu depoyu klonlayın:
+    `git clone [repo_adresiniz]`
+2.  Gerekli kütüphaneleri yükleyin:
+    `pip install -r requirements.txt`
+3.  Projeyi çalıştırmak için:
+    `python [ana_dosya_adınız].py`
 
 ---
+## 🤝 Katkıda Bulunanlar
 
-## 👥 Katkıda Bulunanlar
-
-* **[İrem Kaya](https://github.com/irem-kaya)** - Proje Geliştiricisi
+* [Adınız Soyadınız](https://github.com/github_kullanici_adiniz) - Proje Lideri
+* [Katkıda bulunan diğer kişilerin adları]
 
 ---
+## 📜 Lisans
 
-## 📄 Lisans
-
-Bu proje [MIT Lisansı](LICENSE.md) ile lisanslanmıştır.
+Bu proje, **MIT Lisansı** ile lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına bakınız.
