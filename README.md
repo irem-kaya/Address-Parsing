@@ -1,5 +1,5 @@
 # address-hackathon
-[CI](https://github.com/irem-kaya/address-hackathon/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/irem-kaya/address-hackathon/actions/workflows/ci.yml/badge.svg)
 
 Adres verisi için **normalize**, **eşleştirme** (matching) ve **değerlendirme** pipeline’ı.  
 Bu repo; EDA not defterleri, baseline modelleri, parametrik deneyler ve test altyapısını içerir.
