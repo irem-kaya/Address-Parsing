@@ -74,5 +74,5 @@ Proje şu anda temel adres bileşenlerini ayrıştırabilen bir prototip aşamas
 ## 🤝 Katkıda Bulunanlar
 
 * [İrem Nur Kaya](https://github.com/irem-kaya)
-* Büşra Gümüşay
+* [Büşra Gümüşay](https://github.com/busragmsy)
 
