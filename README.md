@@ -7,17 +7,6 @@
 
 Bu proje, bir hackathon kapsamında geliştirilmiş olup, standart olmayan, serbest metin formatındaki Türkçe adres verilerini ayrıştırarak il, ilçe, mahalle gibi yapısal bileşenlere dönüştürmeyi hedeflemektedir.
 
----
-## 📜 İçindekiler
-- [Projenin Amacı ve Hedefi](#-projenin-amacı-ve-hedefi)
-- [Kullanılan Teknolojiler](#-kullanılan-teknolojiler)
-- [Karşılaşılan Zorluklar ve Öğrenilenler](#-karşılaşılan-zorluklar-ve-öğrenilenler)
-- [Projenin Mevcut Durumu ve Gelecek Adımlar](#-projenin-mevcut-durumu-ve-gelecek-adımlar)
-- [Kurulum ve Çalıştırma](#-kurulum-ve-çalıştırma)
-- [Katkıda Bulunanlar](#-katkıda-bulunanlar)
-- [Lisans](#-lisans)
-
----
 ## 🎯 Projenin Amacı ve Hedefi
 
 Türkiye'deki adres verileri genellikle standart bir formattan yoksundur ve kullanıcılar tarafından serbest metin olarak girilir. Bu durum, adres verilerini analiz etmeyi, coğrafi bilgi sistemlerinde kullanmayı veya veritabanlarında tutarlı bir şekilde saklamayı zorlaştırır.
