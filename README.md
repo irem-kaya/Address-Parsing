@@ -60,17 +60,6 @@ Proje şu anda temel adres bileşenlerini ayrıştırabilen bir prototip aşamas
 * [ ] Kullanıcı dostu bir API veya arayüz oluşturarak projenin pratik kullanımını sağlamak.
 * [ ] Coğrafi koordinat verilerini (latitude, longitude) entegre ederek adresleri harita üzerinde görselleştirmek.
 
----
-## 🚀 Kurulum ve Çalıştırma
-
-1.  Bu depoyu klonlayın:
-    `git clone [repo_adresiniz]`
-2.  Gerekli kütüphaneleri yükleyin:
-    `pip install -r requirements.txt`
-3.  Projeyi çalıştırmak için:
-    `python [ana_dosya_adınız].py`
-
----
 ## 🤝 Katkıda Bulunanlar
 
 * [İrem Nur Kaya](https://github.com/irem-kaya)
